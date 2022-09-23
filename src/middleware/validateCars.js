@@ -1,8 +1,8 @@
 const { HttpResponse } = require("../helpers/http/HttpResponse");
 const validateBody = (req, res, next) => {
   const response = HttpResponse(res);
-  const { body } = req;
-  const { plate, brand, name, userId , kmTraveled, price, description, year } = body;
+  const plate = req.body.plate.toUpperCase();
+  const { brand, name, userId , kmTraveled, price, description, year } = req.body;
   if (
     !plate &&
     !brand &&
@@ -15,10 +15,16 @@ const validateBody = (req, res, next) => {
   ) {
     return response.badRequest("Missing body");
   }
-  if (!plate) {
-    return response.badRequest("Missing plate is required");
+  if (plate) {
+    const oldPlatesRegex = /^[A-Z]{3}-[0-9]{3}$/g;
+    const newPlatesRegex = /^[A-Z]{2}-[0-9]{3}-[A-Z]{2}$/g;
+    if (!oldPlatesRegex.test(plate) || !newPlatesRegex.test(plate)) {
+      return response.badRequest("Invalid plate format");
+    }
+    next();
   }
-  next();
+  return response.badRequest("Missing plate is required");
+ 
 };
 
 const validatePlate = (req, res, next) => {

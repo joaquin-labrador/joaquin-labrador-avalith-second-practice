@@ -11,7 +11,7 @@ router.get("/getavailablecars", carController.getAvailableCars);
 
 //!admin routes
 router.get("", requireToken, carController.getAllCars);
-router.post("/createcar", requireToken, validateBody , carController.createCar);
+router.post("/createcar", requireToken, validateBody, carController.createCar);
 router.delete(
   "/delete/:plate",
   validatePlate,
