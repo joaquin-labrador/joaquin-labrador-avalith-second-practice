@@ -1,7 +1,8 @@
 const { HttpResponse } = require("../helpers/http/HttpResponse");
 const validateBody = (req, res, next) => {
   const response = HttpResponse(res);
-  const plate = req.body.plate.toUpperCase();
+  console.log(req.body);
+  let plate = req.body.plate;
   const { brand, name, userId , kmTraveled, price, description, year } = req.body;
   if (
     !plate &&
@@ -16,6 +17,7 @@ const validateBody = (req, res, next) => {
     return response.badRequest("Missing body");
   }
   if (plate) {
+    plate = plate.toUpperCase();
     const oldPlatesRegex = /^[A-Z]{3}-[0-9]{3}$/g;
     const newPlatesRegex = /^[A-Z]{2}-[0-9]{3}-[A-Z]{2}$/g;
     if (!oldPlatesRegex.test(plate) || !newPlatesRegex.test(plate)) {
