@@ -3,7 +3,7 @@ const validateBody = (req, res, next) => {
   const response = HttpResponse(res);
   console.log(req.body);
   let plate = req.body.plate;
-  const { brand, name, userId , kmTraveled, price, description, year } = req.body;
+  const { brand, name, userId , kmTraveled, price, description, year, color } = req.body;
   if (
     !plate &&
     !brand &&
@@ -12,7 +12,8 @@ const validateBody = (req, res, next) => {
     !price &&
     !description &&
     !year &&
-    !userId
+    !userId &&
+    !color
   ) {
     return response.badRequest("Missing body");
   }
