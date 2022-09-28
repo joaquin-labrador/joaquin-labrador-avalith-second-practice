@@ -52,8 +52,6 @@ const getUserAndCarById = async (req, res) => {
 const buyACar = async (req, res) => {
   const response = HttpResponse(res);
   try {
-    if (!req.isAdmin) return response.unauthorized("Unauthorized");
-
     const { plate } = req.params;
     const car = await Car.findOne({
       where: { plate },
